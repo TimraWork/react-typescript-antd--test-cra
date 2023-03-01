@@ -1,23 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import copy from "copy-to-clipboard";
+import { useClipboard } from "use-clipboard-copy";
+import "./App.css";
+import logo from "./logo.svg";
 
 function App() {
+  const clipboard = useClipboard({ copiedTimeout: 750 });
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+
+        <button
+          onClick={() => {
+            copy("Text", {
+              message: "Press #{key} to copy",
+              onCopy: () => {
+                alert("Copy");
+              },
+            });
+          }}
         >
-          Learn React
-        </a>
+          СКОПИРОВАТЬ
+        </button>
+        <br />
+
+        <button onClick={() => clipboard.copy(new Date().toString())}>
+          {clipboard.copied ? "Copied" : "Copy Current Date"}
+        </button>
       </header>
     </div>
   );
